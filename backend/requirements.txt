@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-multipart
+networkx
+pypdf
+pillow
+rarfile
+pydantic
+python-dotenv
+pyyaml

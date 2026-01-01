@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: oklch(0.12 0.02 250);
+  --color-foreground: oklch(0.95 0.01 250);
+  --color-primary: oklch(0.65 0.25 250);
+  --color-secondary: oklch(0.45 0.2 280);
+  --color-accent: oklch(0.8 0.15 180);
+  --color-muted: oklch(0.25 0.02 250);
+  --color-border: oklch(0.2 0.02 250);
+}
+
+:root {
+  --background: #0a0a0c;
+  --foreground: #fcfcfc;
+  --card: #141417;
+  --card-foreground: #fcfcfc;
+  --popover: #0a0a0c;
+  --popover-foreground: #fcfcfc;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --secondary: #1e293b;
+  --secondary-foreground: #fcfcfc;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #1e293b;
+  --accent-foreground: #fcfcfc;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #3b82f6;
+  --radius: 0.75rem;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+}
+
+.glass {
+  background: rgba(20, 20, 23, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-gradient {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+}
