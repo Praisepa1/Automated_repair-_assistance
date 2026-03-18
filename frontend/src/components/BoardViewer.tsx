@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { ZoomIn, ZoomOut, MousePointer2, Move, Maximize, RefreshCw } from "lucide-react";
 
 interface Component {
@@ -11,22 +12,36 @@ interface Component {
   width: number;
   height: number;
   type: string;
+  net?: string;
 }
 
 export function BoardViewer() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const searchParams = useSearchParams();
   const [zoom, setZoom] = useState(1);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [hoveredComp, setHoveredComp] = useState<string | null>(null);
+  const [components, setComponents] = useState<Component[]>([]);
+  const [traceProblem, setTraceProblem] = useState<string | null>(null);
+  const boardNumber = searchParams.get("board");
 
-  // Mock data for initial render
-  const components: Component[] = [
-    { id: "1", name: "PU1", x: 100, y: 100, width: 40, height: 40, type: "IC" },
-    { id: "2", name: "PQ1", x: 200, y: 150, width: 20, height: 15, type: "MOSFET" },
-    { id: "3", name: "PR1", x: 230, y: 150, width: 10, height: 20, type: "RESISTOR" },
-    { id: "4", name: "PC1", x: 200, y: 200, width: 15, height: 25, type: "CAPACITOR" },
-    { id: "5", name: "PQ2", x: 300, y: 100, width: 20, height: 15, type: "MOSFET" },
-  ];
+  useEffect(() => {
+    if (boardNumber) {
+      fetch(`http://localhost:8000/api/diagnostics/boardview/${boardNumber}`)
+        .then(res => res.json())
+        .then(data => {
+            setComponents(data.components || [])
+            setTraceProblem(data.trace_problem || null)
+        })
+        .catch(console.error);
+    } else {
+      // Mock data if no board is selected
+      setComponents([
+        { id: "1", name: "PU1", x: 100, y: 100, width: 40, height: 40, type: "IC", net: "VIN" },
+        { id: "2", name: "PQ1", x: 200, y: 150, width: 20, height: 15, type: "MOSFET", net: "VCORE" },
+      ]);
+    }
+  }, [boardNumber]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -55,6 +70,30 @@ export function BoardViewer() {
         ctx.moveTo(-1000, y);
         ctx.lineTo(1000, y);
         ctx.stroke();
+      }
+
+      // Draw trace pathway if a problem exists
+      if (traceProblem && components.length >= 2) {
+        ctx.beginPath();
+        // Trace line from first component to last
+        const p1 = components[0];
+        const p2 = components[components.length - 1];
+        ctx.moveTo(p1.x + p1.width / 2, p1.y + p1.height / 2);
+        
+        if (components.length > 2) {
+           const mid = components[Math.floor(components.length / 2)];
+           ctx.lineTo(mid.x + mid.width / 2, mid.y + mid.height / 2);
+        }
+        
+        ctx.lineTo(p2.x + p2.width / 2, p2.y + p2.height / 2);
+        ctx.strokeStyle = "rgba(239, 68, 68, 0.8)"; // glowing red trace
+        ctx.lineWidth = 3 / zoom;
+        ctx.setLineDash([5 / zoom, 5 / zoom]);
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "rgba(239, 68, 68, 0.8)";
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.shadowBlur = 0;
       }
 
       // Draw Components
@@ -89,7 +128,7 @@ export function BoardViewer() {
     };
 
     draw();
-  }, [zoom, offset, hoveredComp]);
+  }, [zoom, offset, hoveredComp, traceProblem, components]);
 
   return (
     <div className="relative w-full h-[600px] bg-[#0e0e11] rounded-3xl border border-[#27272a] overflow-hidden group">
@@ -122,18 +161,24 @@ export function BoardViewer() {
         </div>
       </div>
 
-      <div className="absolute top-6 right-6 flex flex-col gap-2">
-        <div className="bg-[#141417]/80 backdrop-blur-md border border-[#27272a] rounded-xl p-4 shadow-2xl min-w-[150px]">
+      <div className="absolute top-6 right-6 flex flex-col gap-2 max-w-xs">
+        <div className="bg-[#141417]/80 backdrop-blur-md border border-[#27272a] rounded-xl p-4 shadow-2xl">
           <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold mb-3">Viewer Stats</p>
           <div className="space-y-2">
-            <div className="flex justify-between text-xs">
+            <div className="flex justify-between text-xs mb-4">
               <span className="text-muted-foreground">Components:</span>
               <span className="font-mono text-blue-500">{components.length}</span>
             </div>
-            <div className="flex justify-between text-xs">
-              <span className="text-muted-foreground">Active Net:</span>
-              <span className="font-mono text-green-500">VIN</span>
-            </div>
+            {traceProblem && (
+               <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                 <p className="text-[10px] text-red-500 font-bold uppercase mb-1">Trace Solution</p>
+                 <p className="text-xs text-red-200">{traceProblem}</p>
+                 <p className="text-[10px] text-red-400 mt-2 flex items-center gap-1 group">
+                    <RefreshCw size={10} className="animate-spin" />
+                    Tracing Pathway...
+                 </p>
+               </div>
+            )}
           </div>
         </div>
       </div>

@@ -1,0 +1,108 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]:
+          - img [ref=e7]
+          - generic [ref=e10]: AntigravityFix
+        - button [ref=e11]:
+          - img [ref=e12]
+      - generic [ref=e15]:
+        - img [ref=e16]
+        - 'textbox "Search board #..." [ref=e19]'
+      - navigation [ref=e20]:
+        - link "Dashboard" [ref=e21] [cursor=pointer]:
+          - /url: /
+          - img [ref=e22]
+          - generic [ref=e27]: Dashboard
+        - link "Diagnostic Engine" [ref=e28] [cursor=pointer]:
+          - /url: /diagnostics
+          - img [ref=e29]
+          - generic [ref=e31]: Diagnostic Engine
+        - link "Board Viewer" [ref=e32] [cursor=pointer]:
+          - /url: /viewer
+          - img [ref=e33]
+          - generic [ref=e36]: Board Viewer
+        - link "Schematic Sync" [ref=e37] [cursor=pointer]:
+          - /url: /schematics
+          - img [ref=e38]
+          - generic [ref=e41]: Schematic Sync
+        - link "Repair History" [ref=e42] [cursor=pointer]:
+          - /url: /history
+          - img [ref=e43]
+          - generic [ref=e47]: Repair History
+        - link "Safety Guides" [ref=e48] [cursor=pointer]:
+          - /url: /safety
+          - img [ref=e49]
+          - generic [ref=e51]: Safety Guides
+    - link "Settings" [ref=e53] [cursor=pointer]:
+      - /url: /settings
+      - img [ref=e54]
+      - generic [ref=e57]: Settings
+  - generic [ref=e58]:
+    - banner [ref=e59]:
+      - generic [ref=e61]:
+        - button [ref=e62]:
+          - img [ref=e63]
+        - heading "Diagnostic Workspace" [level=1] [ref=e64]
+      - generic [ref=e67]:
+        - button [ref=e68]:
+          - img [ref=e69]
+        - img [ref=e75]
+    - main [ref=e78]:
+      - generic [ref=e79]:
+        - generic [ref=e82]:
+          - heading "Ready to Diagnose?" [level=2] [ref=e83]
+          - paragraph [ref=e84]: Upload your schematics and boardview files to get started. Our AI-powered engine will trace connections and suggest repair paths in seconds.
+          - generic [ref=e85]:
+            - link "Start New Diagnostic" [ref=e86] [cursor=pointer]:
+              - /url: /diagnostics
+              - text: Start New Diagnostic
+              - img [ref=e87]
+            - button "View Documentation" [ref=e89]
+        - generic [ref=e90]:
+          - generic [ref=e91]:
+            - generic [ref=e92]:
+              - img [ref=e94]
+              - generic [ref=e98]:
+                - img [ref=e99]
+                - text: +12%
+            - paragraph [ref=e102]: Files Analyzed
+            - heading "0" [level=3] [ref=e103]
+          - generic [ref=e104]:
+            - generic [ref=e105]:
+              - img [ref=e107]
+              - generic [ref=e110]:
+                - img [ref=e111]
+                - text: +5%
+            - paragraph [ref=e114]: Successful Repairs
+            - heading "0" [level=3] [ref=e115]
+          - generic [ref=e116]:
+            - generic [ref=e117]:
+              - img [ref=e119]
+              - generic [ref=e121]:
+                - img [ref=e122]
+                - text: 0%
+            - paragraph [ref=e125]: Active Diagnostics
+            - heading "0" [level=3] [ref=e126]
+        - generic [ref=e127]:
+          - generic [ref=e129]:
+            - heading "Automated Tracing" [level=3] [ref=e130]
+            - paragraph [ref=e131]: Trace VIN, VCORE, and +BATT rails automatically across complex motherboards. Identify shorts in milliseconds.
+          - generic [ref=e139]:
+            - generic [ref=e140]:
+              - img [ref=e142]
+              - generic [ref=e145]:
+                - heading "Need Help?" [level=4] [ref=e146]
+                - paragraph [ref=e147]: Check out our repair guides and safety procedures.
+              - button "View All" [ref=e148]
+            - generic [ref=e149]:
+              - img [ref=e151]
+              - generic [ref=e153]:
+                - heading "Recent Activity" [level=4] [ref=e154]
+                - paragraph [ref=e155]: No recent diagnostics found. Start one now!
+  - alert [ref=e156]
+```

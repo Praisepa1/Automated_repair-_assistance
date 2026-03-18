@@ -8,3 +8,16 @@ rarfile
 pydantic
 python-dotenv
 pyyaml
+
+celery
+redis
+opencv-python
+pdfplumber
+
+# Testing
+pytest
+httpx
+
+# Database
+SQLAlchemy
+psycopg2-binary

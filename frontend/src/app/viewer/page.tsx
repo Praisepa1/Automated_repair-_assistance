@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { BoardViewer } from "@/components/BoardViewer";
 import { 
   Search, 
@@ -34,7 +35,9 @@ export default function ViewerPage() {
 
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-4 gap-6 min-h-0">
         <div className="lg:col-span-3 min-h-[500px]">
-          <BoardViewer />
+          <Suspense fallback={<div className="text-white p-10 flex items-center justify-center h-full">Loading Board View...</div>}>
+            <BoardViewer />
+          </Suspense>
         </div>
 
         <div className="space-y-6 overflow-y-auto pr-2">
